@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pound That Fufu! - A silly mini-game from Nakie Foods. Choose a character and pound fufu!">
+  <title>Pound That Fufu! | Nakie Foods</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="loader" id="loader">
+  <div class="loader-spinner"></div>
+</div>
+
+<nav class="nav" id="nav">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-icon">&#127836;</span>
+      Nakie<span>Foods</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="game.html" class="active">&#127918; Game</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="nav-cta">&#128222; Book a Table</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero game-hero">
+  <div class="container">
+    <h1>&#127918; Pound That <span class="highlight">Fufu!</span></h1>
+    <p>Choose your pounder and start pounding!</p>
+  </div>
+</section>
+
+<div class="kente-strip"></div>
+
+<section class="game-section" id="gameSection">
+  <div class="container">
+
+    <div class="char-select" id="charSelect">
+      <h2>&#128073; Choose Your Pounder</h2>
+      <div class="char-cards">
+        <button class="char-card" data-char="kofi">
+          <div class="cc-avatar ca-kofi">
+            <div class="cc-head"></div>
+            <div class="cc-body"></div>
+            <div class="cc-arm l"></div>
+            <div class="cc-arm r"></div>
+          </div>
+          <strong>Kofi</strong>
+          <span>The Strongman</span>
+        </button>
+        <button class="char-card" data-char="maama">
+          <div class="cc-avatar ca-maama">
+            <div class="cc-head">
+              <div class="cc-scarf"></div>
+            </div>
+            <div class="cc-body"></div>
+          </div>
+          <strong>Maama Aba</strong>
+          <span>The Expert</span>
+        </button>
+        <button class="char-card" data-char="ato">
+          <div class="cc-avatar ca-ato">
+            <div class="cc-head"></div>
+            <div class="cc-body"></div>
+            <div class="cc-pants"></div>
+          </div>
+          <strong>Ato</strong>
+          <span>The Learner</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="game-container" id="gameContainer" style="display:none;">
+      <div class="game-header">
+        <div class="game-stat">
+          <span class="stat-label">Pounds</span>
+          <span class="stat-value" id="poundCount">0</span>
+        </div>
+        <div class="game-stat">
+          <span class="stat-label">Time</span>
+          <span class="stat-value" id="gameTimer">0.0s</span>
+        </div>
+        <div class="game-stat" id="bestStat" style="display:none;">
+          <span class="stat-label">Best</span>
+          <span class="stat-value" id="bestTime">--</span>
+        </div>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div class="game-scene" id="gameScene">
+        <div class="char-figure" id="charFigure">
+          <div class="char-head" id="charHead">
+            <div class="char-scarf" id="charScarf"></div>
+            <div class="char-eye left"></div>
+            <div class="char-eye right"></div>
+            <div class="char-mouth"></div>
+          </div>
+          <div class="char-torso" id="charTorso">
+            <div class="char-body" id="charBody">
+              <span class="char-label" id="charLabel">Kofi</span>
+            </div>
+            <div class="char-legs" id="charLegs"></div>
+          </div>
+          <div class="char-arm" id="charArm">
+            <div class="char-hand"></div>
+          </div>
+        </div>
+        <div class="pound-area">
+          <div class="pestle" id="pestle">
+            <div class="pestle-grip"></div>
+            <div class="pestle-shaft"></div>
+          </div>
+          <div class="mortar" id="mortar">
+            <div class="fufu" id="fufu">
+              <span class="fufu-dot"></span><span class="fufu-dot"></span>
+              <span class="fufu-dot"></span><span class="fufu-dot"></span>
+              <div class="fufu-face" id="fufuFace">&#128513;</div>
+            </div>
+          </div>
+          <div class="pound-hint" id="poundHint">&#128073; Tap to pound!</div>
+        </div>
+      </div>
+
+      <div class="game-message" id="gameMessage">
+        <span id="messageText">Pound the fufu to perfection!</span>
+      </div>
+
+      <div class="game-actions">
+        <button class="btn btn-primary" id="resetBtn">&#128260; Pound Again</button>
+      </div>
+    </div>
+
+    <div class="game-result" id="gameResult" style="display:none;">
+      <div class="result-card">
+        <div class="result-emoji" id="resultEmoji">&#127881;</div>
+        <h2 id="resultTitle">Fufu Master!</h2>
+        <p id="resultDesc"></p>
+        <div class="result-stats">
+          <div class="rstat">
+            <span class="rstat-val" id="resultPounds">50</span>
+            <span class="rstat-label">Pounds</span>
+          </div>
+          <div class="rstat">
+            <span class="rstat-val" id="resultTime">0.0s</span>
+            <span class="rstat-label">Time</span>
+          </div>
+          <div class="rstat">
+            <span class="rstat-val" id="resultPps">0.0</span>
+            <span class="rstat-label">Pounds/s</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="playAgainBtn">&#127918; Play Again</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="kente-strip"></div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>&#127836; Nakie<span>Foods</span></h3>
+        <p>Authentic Ghanaian cuisine in the heart of Anaji, Takoradi. Bringing you the rich, vibrant flavours of Ghana since 2018.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="game.html">Game</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li>Mon – Fri: 10am – 10pm</li>
+          <li>Sat: 9am – 11pm</li>
+          <li>Sun: 12pm – 9pm</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="contact-item">
+          <span class="icon">&#128205;</span>
+          <span>Anaji, inside Queen of Peace, Takoradi, Western Region, Ghana</span>
+        </div>
+        <div class="contact-item">
+          <span class="icon">&#128222;</span>
+          <span>+233 50 123 4567</span>
+        </div>
+        <div class="contact-item">
+          <span class="icon">&#9993;</span>
+          <span>hello@nakiefoods.com</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Nakie Foods. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram">&#120143;</a>
+        <a href="#" aria-label="Facebook">&#120156;</a>
+        <a href="#" aria-label="WhatsApp">&#128222;</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+(function() {
+  const POUNDS_GOAL = 50;
+  const MESSAGES = [
+    { min: 0, text: 'Just getting started... keep pounding!' },
+    { min: 10, text: 'The fufu is softening up!' },
+    { min: 20, text: 'Getting smoother... nice rhythm!' },
+    { min: 30, text: 'Halfway there! You got this!' },
+    { min: 40, text: 'Almost done! Grandma would be proud!' },
+  ];
+  const RESULTS = [
+    { max: 8, title: 'Fufu Legend!', emoji: '&#127942;', desc: 'Incredible speed! You belong in a Ghanaian kitchen!' },
+    { max: 15, title: 'Master Pounder!', emoji: '&#127881;', desc: 'Grandma nods in approval. That\'s some serious rhythm!' },
+    { max: 25, title: 'Kitchen Pro!', emoji: '&#128170;', desc: 'Solid work! Your fufu game is strong.' },
+    { max: 40, title: 'Getting There!', emoji: '&#128522;', desc: 'Not bad, but Grandma says you need more practice!' },
+    { max: Infinity, title: 'Keep Practicing!', emoji: '&#128517;', desc: 'Eh... the fufu is a bit lumpy. Try again!' },
+  ];
+  const FACES = ['&#128513;', '&#128522;', '&#128170;', '&#128526;', '&#129321;', '&#128523;'];
+  const CHARS = {
+    kofi: { name: 'Kofi', headColor: '#5C3A1E', bodyColor: '#CE1126', label: 'The Strongman' },
+    maama: { name: 'Maama Aba', headColor: '#8B6914', bodyColor: '#006B3F', label: 'The Expert' },
+    ato: { name: 'Ato', headColor: '#D4A574', bodyColor: '#1E90FF', label: 'The Learner' },
+  };
+
+  let pounds = 0;
+  let timer = null;
+  let startTime = null;
+  let isRunning = false;
+  let isDone = false;
+  let isPounding = false;
+  let selectedChar = null;
+  let bestTime = localStorage.getItem('nakieFufuBest') || null;
+
+  const charSelect = document.getElementById('charSelect');
+  const gameContainer = document.getElementById('gameContainer');
+  const gameResult = document.getElementById('gameResult');
+  const gameScene = document.getElementById('gameScene');
+  const poundCount = document.getElementById('poundCount');
+  const gameTimer = document.getElementById('gameTimer');
+  const progressFill = document.getElementById('progressFill');
+  const charFigure = document.getElementById('charFigure');
+  const charHead = document.getElementById('charHead');
+  const charScarf = document.getElementById('charScarf');
+  const charTorso = document.getElementById('charTorso');
+  const charBody = document.getElementById('charBody');
+  const charLabel = document.getElementById('charLabel');
+  const charLegs = document.getElementById('charLegs');
+  const charArm = document.getElementById('charArm');
+  const pestle = document.getElementById('pestle');
+  const mortar = document.getElementById('mortar');
+  const fufu = document.getElementById('fufu');
+  const fufuFace = document.getElementById('fufuFace');
+  const poundHint = document.getElementById('poundHint');
+  const messageText = document.getElementById('messageText');
+  const resetBtn = document.getElementById('resetBtn');
+  const playAgainBtn = document.getElementById('playAgainBtn');
+  const bestStat = document.getElementById('bestStat');
+  const bestTimeEl = document.getElementById('bestTime');
+
+  if (bestTime) {
+    bestStat.style.display = 'flex';
+    bestTimeEl.textContent = bestTime + 's';
+  }
+
+  document.querySelectorAll('.char-card').forEach(card => {
+    card.addEventListener('click', () => selectCharacter(card.dataset.char));
+  });
+
+  function selectCharacter(charId) {
+    selectedChar = charId;
+    const c = CHARS[charId];
+    charSelect.style.display = 'none';
+    gameContainer.style.display = 'block';
+
+    charFigure.className = 'char-figure char-' + charId;
+    charHead.style.background = c.headColor;
+    charBody.style.background = c.bodyColor;
+    charArm.style.background = c.headColor;
+    charLabel.textContent = c.name;
+
+    charScarf.style.display = charId === 'maama' ? 'block' : 'none';
+    charLegs.style.display = charId === 'ato' ? 'block' : 'none';
+
+    updateUI();
+  }
+
+  function applyPound() {
+    if (isPounding || isDone) return;
+    isPounding = true;
+    gameScene.classList.add('pounding');
+    setTimeout(() => {
+      gameScene.classList.remove('pounding');
+      isPounding = false;
+    }, 150);
+  }
+
+  function pound() {
+    if (isDone || isPounding) return;
+    if (!isRunning) {
+      isRunning = true;
+      startTime = performance.now();
+      timer = setInterval(() => {
+        const elapsed = (performance.now() - startTime) / 1000;
+        gameTimer.textContent = elapsed.toFixed(1) + 's';
+      }, 100);
+      poundHint.style.display = 'none';
+    }
+
+    pounds++;
+    applyPound();
+    mortar.style.transform = 'scale(0.97)';
+    setTimeout(() => { mortar.style.transform = ''; }, 120);
+
+    const pct = (pounds / POUNDS_GOAL) * 100;
+    poundCount.textContent = pounds;
+    progressFill.style.width = Math.min(pct, 100) + '%';
+
+    const scale = 1 + (pounds / POUNDS_GOAL) * 0.05;
+    fufu.style.transform = `translateX(-50%) scale(${scale})`;
+    fufu.style.filter = `brightness(${1 + (pounds / POUNDS_GOAL) * 0.15})`;
+
+    if (pounds < 10) {
+      fufu.style.borderRadius = '60% 35% 55% 45%';
+    } else if (pounds < 25) {
+      fufu.style.borderRadius = '50% 50% 50% 50%';
+    } else {
+      fufu.style.borderRadius = '45% 55% 48% 52%';
+    }
+
+    let msg = MESSAGES.slice().reverse().find(m => pounds >= m.min);
+    messageText.textContent = msg ? msg.text : MESSAGES[0].text;
+
+    if (pounds % 5 === 0 && pounds > 0) {
+      fufuFace.innerHTML = FACES[Math.floor(Math.random() * FACES.length)];
+    }
+
+    if (pounds >= POUNDS_GOAL) {
+      isDone = true;
+      clearInterval(timer);
+      const elapsed = ((performance.now() - startTime) / 1000);
+      gameTimer.textContent = elapsed.toFixed(1) + 's';
+
+      if (!bestTime || elapsed < parseFloat(bestTime)) {
+        bestTime = elapsed.toFixed(1);
+        localStorage.setItem('nakieFufuBest', bestTime);
+        bestStat.style.display = 'flex';
+        bestTimeEl.textContent = bestTime + 's';
+      }
+
+      setTimeout(() => showResult(elapsed), 500);
+    }
+  }
+
+  function showResult(elapsed) {
+    gameContainer.style.display = 'none';
+    gameResult.style.display = 'block';
+    const result = RESULTS.find(r => elapsed <= r.max);
+    document.getElementById('resultEmoji').innerHTML = result.emoji;
+    document.getElementById('resultTitle').textContent = result.title;
+    document.getElementById('resultDesc').textContent = selectedChar
+      ? CHARS[selectedChar].name + ' pounded ' + POUNDS_GOAL + ' times in ' + elapsed.toFixed(1) + 's!  ' + result.desc
+      : result.desc;
+    document.getElementById('resultPounds').textContent = POUNDS_GOAL;
+    document.getElementById('resultTime').textContent = elapsed.toFixed(1) + 's';
+    document.getElementById('resultPps').textContent = (POUNDS_GOAL / elapsed).toFixed(1);
+  }
+
+  function resetGame() {
+    pounds = 0;
+    isRunning = false;
+    isDone = false;
+    isPounding = false;
+    if (timer) { clearInterval(timer); timer = null; }
+    gameTimer.textContent = '0.0s';
+    poundCount.textContent = '0';
+    progressFill.style.width = '0%';
+    fufu.style.transform = 'translateX(-50%) scale(1)';
+    fufu.style.background = '';
+    fufu.style.borderRadius = '60% 35% 55% 45%';
+    fufu.style.filter = '';
+    fufuFace.innerHTML = '&#128513;';
+    gameScene.classList.remove('pounding');
+    mortar.style.transform = '';
+    poundHint.style.display = 'block';
+    messageText.textContent = 'Pound the fufu to perfection!';
+    gameContainer.style.display = 'block';
+    gameResult.style.display = 'none';
+    gameContainer.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  pestle.addEventListener('click', pound);
+  pestle.addEventListener('touchstart', (e) => { e.preventDefault(); pound(); });
+  mortar.addEventListener('click', pound);
+  document.querySelector('.pound-area').addEventListener('click', pound);
+  resetBtn.addEventListener('click', resetGame);
+  playAgainBtn.addEventListener('click', resetGame);
+})();
+</script>
+</body>
+</html>
