@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const data = new URLSearchParams(new FormData(form));
-      fetch('/', {
+      fetch(form.action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/x-www-form-urlencoded, text/html, */*' },
         body: data.toString()
