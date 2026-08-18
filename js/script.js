@@ -148,13 +148,16 @@ document.addEventListener('DOMContentLoaded', () => {
       })
         .then(response => {
           if (!response.ok) throw new Error('HTTP ' + response.status);
-          btn.innerHTML = '&#10004; Sent!';
+          const isOrderForm = form.id === 'orderForm';
+          btn.innerHTML = isOrderForm ? '&#10004; ORDER PLACED SUCCESSFULLY' : '&#10004; Sent!';
           btn.style.background = 'var(--green)';
           if (statusEl) {
-            statusEl.textContent = 'Thank you! Your request has been sent — we\u2019ll get back to you soon.';
+            statusEl.textContent = isOrderForm
+              ? 'ORDER PLACED SUCCESSFULLY! The kitchen has received your order and will contact you shortly.'
+              : 'Thank you! Your request has been sent — we\u2019ll get back to you soon.';
             statusEl.className = 'form-status success';
           }
-          if (form.id === 'orderForm') {
+          if (isOrderForm) {
             localStorage.removeItem('nakie-foods-cart');
           }
           form.reset();
