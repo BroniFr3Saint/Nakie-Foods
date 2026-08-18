@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cartButton.type = 'button';
     cartButton.className = 'cart-toggle';
     cartButton.setAttribute('aria-expanded', 'false');
-    cartButton.innerHTML = '🛒 Cart <span class="cart-count">0</span>';
+    cartButton.innerHTML = '🧺 Kitchen basket <span class="cart-count">0</span>';
     document.body.appendChild(cartButton);
 
     const cartPanel = document.createElement('aside');
@@ -190,14 +190,19 @@ document.addEventListener('DOMContentLoaded', () => {
     cartPanel.setAttribute('aria-label', 'Your order cart');
     const cartHeader = document.createElement('div');
     cartHeader.className = 'cart-header';
+    const cartTitleGroup = document.createElement('div');
+    const cartKicker = document.createElement('p');
+    cartKicker.className = 'cart-kicker';
+    cartKicker.textContent = 'Today’s selection';
     const cartTitle = document.createElement('h2');
-    cartTitle.textContent = 'Your cart';
+    cartTitle.textContent = 'Kitchen basket';
+    cartTitleGroup.append(cartKicker, cartTitle);
     const closeCart = document.createElement('button');
     closeCart.type = 'button';
     closeCart.className = 'cart-close';
     closeCart.setAttribute('aria-label', 'Close cart');
     closeCart.textContent = '×';
-    cartHeader.append(cartTitle, closeCart);
+    cartHeader.append(cartTitleGroup, closeCart);
     const cartItems = document.createElement('div');
     cartItems.className = 'cart-items';
     const cartFooter = document.createElement('div');
@@ -219,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!cart.length) {
         const empty = document.createElement('p');
         empty.className = 'cart-empty';
-        empty.textContent = 'Your cart is empty. Add a dish from the menu to get started.';
+        empty.textContent = 'Your basket is empty. Pick something fresh from today’s kitchen.';
         cartItems.appendChild(empty);
         return;
       }
@@ -262,8 +267,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const checkout = document.createElement('a');
       checkout.className = 'btn btn-primary cart-checkout';
       checkout.href = 'order.html';
-      checkout.textContent = 'Continue to order';
-      cartFooter.append(totalRow, checkout);
+      checkout.textContent = 'Review & place order';
+      const clearCart = document.createElement('button');
+      clearCart.type = 'button';
+      clearCart.className = 'clear-cart';
+      clearCart.textContent = 'Clear basket';
+      clearCart.addEventListener('click', () => {
+        writeCart([]);
+        renderCart();
+      });
+      cartFooter.append(totalRow, checkout, clearCart);
     };
     menuItemsForCart.forEach((item) => {
       const name = item.querySelector('h3')?.textContent.trim();
@@ -274,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const addButton = document.createElement('button');
       addButton.type = 'button';
       addButton.className = 'add-to-cart';
-      addButton.textContent = 'Add to cart';
+      addButton.textContent = 'Add to basket';
       addButton.addEventListener('click', () => {
         const cart = readCart();
         const existing = cart.find(entry => entry.name === name);

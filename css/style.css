@@ -28,7 +28,11 @@ html {
 body {
   font-family: var(--font-body);
   color: var(--black);
-  background: var(--cream);
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(121, 82, 45, 0.045) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 75% 65%, rgba(121, 82, 45, 0.035) 0 1px, transparent 1.5px);
+  background-size: 18px 18px, 23px 23px;
   overflow-x: hidden;
   line-height: 1.6;
 }
@@ -885,7 +889,9 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(135deg, var(--black) 0%, #3A2E23 100%);
+  background:
+    linear-gradient(115deg, rgba(40, 26, 17, 0.94), rgba(77, 46, 25, 0.91)),
+    repeating-linear-gradient(88deg, #3b2416 0 5px, #482c1a 5px 10px);
   position: relative;
   overflow: hidden;
   padding-top: 116px;
@@ -894,7 +900,9 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 30% 50%, rgba(217,164,65,0.05), transparent 60%);
+  background:
+    radial-gradient(circle at 18% 70%, rgba(209, 152, 67, 0.21), transparent 30%),
+    radial-gradient(circle at 84% 22%, rgba(87, 126, 68, 0.18), transparent 25%);
 }
 .page-hero h1 {
   font-family: var(--font-display);
@@ -920,7 +928,9 @@ body {
 
 .full-menu {
   padding: 80px 0;
-  background: var(--cream);
+  background:
+    linear-gradient(rgba(253, 251, 247, 0.9), rgba(253, 251, 247, 0.96)),
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(116, 79, 45, 0.06) 32px 33px);
 }
 .menu-tabs {
   display: flex;
@@ -933,7 +943,8 @@ body {
   padding: 10px 28px;
   border-radius: 50px;
   border: 2px solid rgba(0,0,0,0.06);
-  background: linear-gradient(180deg, #FFFFFF, #FBF5EC);
+  background: linear-gradient(180deg, #fffef9, #f2e6d2);
+  box-shadow: 0 2px 0 rgba(91, 58, 30, 0.09);
   font-family: var(--font-body);
   font-size: 0.9rem;
   font-weight: 600;
@@ -946,7 +957,7 @@ body {
   color: var(--black);
 }
 .menu-tab.active {
-  background: var(--red);
+  background: linear-gradient(135deg, #9b5132, #b56b3e);
   color: #fff;
   border-color: var(--red);
 }
@@ -998,20 +1009,22 @@ body {
 .menu-item-block {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #FFFFFF, #FBF5EC);
+  background: linear-gradient(145deg, #fffef9, #f5ebd9);
+  border: 1px solid rgba(111, 75, 41, 0.15);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: var(--shadow);
   transition: all var(--transition);
 }
 .menu-item-block:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px) rotate(-0.2deg);
   box-shadow: var(--shadow-lg);
 }
 .menu-item-block .item-img-full {
   width: 100%;
   height: 200px;
   object-fit: cover;
+  border-bottom: 5px solid rgba(123, 77, 41, 0.12);
 }
 .menu-item-block .item-body {
   padding: 20px;
@@ -1335,8 +1348,9 @@ body {
   margin-left: auto;
   padding: 8px 12px;
   border: 0;
-  border-radius: 8px;
-  background: var(--dark-brown);
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 50px;
+  background: linear-gradient(135deg, #4d6b45, #31583b);
   color: #fff;
   font: inherit;
   font-size: 0.78rem;
@@ -1344,7 +1358,7 @@ body {
   cursor: pointer;
   transition: transform var(--transition), background var(--transition);
 }
-.add-to-cart:hover { background: var(--red); transform: translateY(-2px); }
+.add-to-cart:hover { background: linear-gradient(135deg, #9b5132, #b56b3e); transform: translateY(-2px); }
 .cart-toggle {
   position: fixed;
   right: 24px;
@@ -1356,7 +1370,7 @@ body {
   padding: 12px 16px;
   border: 0;
   border-radius: 50px;
-  background: var(--dark-brown);
+  background: linear-gradient(135deg, #4e321e, #745036);
   color: #fff;
   box-shadow: var(--shadow-lg);
   font: inherit;
@@ -1384,27 +1398,39 @@ body {
   width: min(390px, 100%);
   height: 100dvh;
   padding: 24px;
-  background: #fffdf9;
+  background-color: #fffaf0;
+  background-image:
+    linear-gradient(90deg, rgba(123, 79, 42, 0.045) 1px, transparent 1px),
+    linear-gradient(rgba(123, 79, 42, 0.04) 1px, transparent 1px);
+  background-size: 18px 18px;
   box-shadow: -8px 0 30px rgba(45, 29, 19, 0.2);
   transform: translateX(105%);
   transition: transform 0.25s ease;
 }
 .cart-panel.open { transform: translateX(0); }
-.cart-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid rgba(72, 43, 25, 0.14); }
+.cart-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px dashed rgba(72, 43, 25, 0.28); }
 .cart-header h2 { margin: 0; color: var(--dark-brown); }
+.cart-kicker { margin: 0 0 2px; color: #7d5b39; font-family: var(--font-alt); font-size: 1.05rem; line-height: 1; }
 .cart-close { width: 36px; height: 36px; border: 0; border-radius: 50%; background: #f4ede3; color: var(--dark-brown); font-size: 1.8rem; line-height: 1; cursor: pointer; }
 .cart-items { flex: 1; overflow-y: auto; padding: 12px 0; }
 .cart-empty { color: #777; line-height: 1.6; }
-.cart-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(72, 43, 25, 0.1); }
+.cart-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px dashed rgba(72, 43, 25, 0.18); }
 .cart-item strong, .cart-item span { display: block; }
 .cart-item strong { color: var(--dark-brown); font-size: 0.92rem; }
 .cart-item > div:first-child > span { margin-top: 4px; color: var(--red); font-weight: 700; font-size: 0.85rem; }
 .cart-quantity { display: flex; align-items: center; gap: 8px; }
 .cart-quantity button { width: 28px; height: 28px; border: 1px solid #d9cdbd; border-radius: 6px; background: #fff; color: var(--dark-brown); font-size: 1.1rem; cursor: pointer; }
 .cart-quantity span { min-width: 14px; text-align: center; font-weight: 700; }
-.cart-footer { border-top: 1px solid rgba(72, 43, 25, 0.14); padding-top: 16px; }
+.cart-footer { border-top: 1px dashed rgba(72, 43, 25, 0.28); padding-top: 16px; }
 .cart-total { margin: 0 0 14px; color: var(--dark-brown); font-weight: 800; }
 .cart-checkout { width: 100%; justify-content: center; }
+.clear-cart { display: block; margin: 10px auto 0; border: 0; background: transparent; color: #7a604b; font: inherit; font-size: 0.8rem; text-decoration: underline; cursor: pointer; }
+
+@media (max-width: 600px) {
+  .cart-toggle { right: 16px; bottom: 80px; padding: 10px 13px; font-size: 0.82rem; }
+  .cart-panel { padding: 20px; }
+  .add-to-cart { padding: 7px 10px; font-size: 0.72rem; }
+}
 
 /* ─── WEEKLY MENU ─── */
 .weekly-section {
