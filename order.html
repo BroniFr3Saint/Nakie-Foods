@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Order Nakie Foods for delivery in Anaji, Takoradi. Order on WhatsApp or use our online order form. Mobile Money accepted.">
+  <title>Order &amp; Delivery | Nakie Foods – Anaji, Takoradi</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="loader" id="loader">
+  <div class="loader-spinner"></div>
+</div>
+
+<nav class="nav" id="nav">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-icon">&#127836;</span>
+      Nakie<span>Foods</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="order.html" class="active">Order</a></li>
+      <li><a href="game.html">Game</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html#reserve" class="nav-cta">Book a Table</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero order-hero">
+  <div class="container">
+    <h1>Order &amp; <span class="highlight">Delivery</span></h1>
+    <p>Hot, fresh Ghanaian food delivered to your door in Anaji &amp; around Takoradi</p>
+  </div>
+</section>
+
+<div class="kente-strip"></div>
+
+<section class="delivery-section">
+  <div class="container">
+    <div class="delivery-cards">
+      <div class="delivery-card reveal">
+        <div class="delivery-icon">&#128666;</div>
+        <h3>Delivery Areas</h3>
+        <ul>
+          <li><strong>Anaji &amp; environs</strong> — 25–35 min</li>
+          <li><strong>Takoradi town</strong> — 40–55 min</li>
+          <li><strong>Sekondi</strong> — 60–75 min</li>
+        </ul>
+      </div>
+      <div class="delivery-card reveal">
+        <div class="delivery-icon">&#128179;</div>
+        <h3>Payment</h3>
+        <ul>
+          <li><strong>Mobile Money</strong> — MTN MoMo, Telecel Cash, AT Money</li>
+          <li><strong>Cash on delivery</strong> — pay when your food arrives</li>
+        </ul>
+      </div>
+      <div class="delivery-card reveal">
+        <div class="delivery-icon">&#128338;</div>
+        <h3>Ordering Hours</h3>
+        <ul>
+          <li><strong>Mon – Fri:</strong> 10am – 10pm</li>
+          <li><strong>Sat:</strong> 9am – 11pm</li>
+          <li><strong>Sun:</strong> 12pm – 9pm</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="order-cta reveal">
+      <h3>Fastest way to order? &#128073;</h3>
+      <p>Send us a WhatsApp message and we&rsquo;ll confirm your order right away.</p>
+      <a href="https://wa.me/233205155149?text=Hello%20Nakie%20Foods!%20I%27d%20like%20to%20place%20an%20order." class="btn btn-whatsapp" target="_blank" rel="noopener">&#128172; Order on WhatsApp</a>
+    </div>
+
+    <div class="contact-form order-form reveal">
+      <h3>&#128221; Place an Order</h3>
+      <p class="order-form-note">Prefer to order online? Fill this in and we&rsquo;ll call you back to confirm.</p>
+      <form id="orderForm" name="order" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="order">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="order-name">Your Name</label>
+            <input type="text" id="order-name" name="name" placeholder="Kwame Asante" required>
+          </div>
+          <div class="form-group">
+            <label for="order-phone">Phone Number</label>
+            <input type="tel" id="order-phone" name="phone" placeholder="+233 50 000 0000" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="order-address">Delivery Address</label>
+          <input type="text" id="order-address" name="address" placeholder="House number / landmark, Anaji, Takoradi" required>
+        </div>
+        <div class="form-group">
+          <label for="order-items">Your Order</label>
+          <textarea id="order-items" name="items" placeholder="e.g. 2x Jollof Rice with Chicken, 1x Banku &amp; Tilapia, 1x Sobolo" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="order-payment">Payment Method</label>
+          <select id="order-payment" name="payment">
+            <option value="mtn-momo">MTN MoMo</option>
+            <option value="telecel-cash">Telecel Cash</option>
+            <option value="at-money">AT Money</option>
+            <option value="cash">Cash on Delivery</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="order-notes">Special Instructions (optional)</label>
+          <input type="text" id="order-notes" name="notes" placeholder="e.g. extra pepper, no onions">
+        </div>
+        <div class="form-status" role="status" aria-live="polite"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send Order</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="kente-strip"></div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>&#127836; Nakie<span>Foods</span></h3>
+        <p>Authentic Ghanaian cuisine in the heart of Anaji, Takoradi. Bringing you the rich, vibrant flavours of Ghana since 2018.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="order.html">Order</a></li>
+          <li><a href="game.html">Game</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li>Mon – Fri: 10am – 10pm</li>
+          <li>Sat: 9am – 11pm</li>
+          <li>Sun: 12pm – 9pm</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="contact-item">
+          <span class="icon">&#128205;</span>
+          <span>Anaji, inside Queen of Peace, Takoradi, Western Region, Ghana</span>
+        </div>
+        <div class="contact-item">
+          <span class="icon">&#128222;</span>
+          <span>+233 205 155 149</span>
+        </div>
+        <div class="contact-item">
+          <span class="icon">&#9993;</span>
+          <span>hello@nakiefoods.com</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Nakie Foods. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram">&#120143;</a>
+        <a href="#" aria-label="Facebook">&#120156;</a>
+        <a href="#" aria-label="WhatsApp">&#128222;</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

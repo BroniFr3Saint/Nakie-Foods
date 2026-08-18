@@ -25,9 +25,10 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
       <li><a href="menu.html" class="active">Menu</a></li>
-      <li><a href="game.html">&#127918; Game</a></li>
+      <li><a href="order.html">Order</a></li>
+      <li><a href="game.html">Game</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="contact.html" class="nav-cta">&#128222; Book a Table</a></li>
+      <li><a href="contact.html#reserve" class="nav-cta">Book a Table</a></li>
     </ul>
   </div>
 </nav>
@@ -44,12 +45,13 @@
 <section class="full-menu">
   <div class="container">
     <div class="menu-tabs" id="menuTabs">
-      <button class="menu-tab active" data-category="all">&#127869; All</button>
-      <button class="menu-tab" data-category="soups">&#127858; Soups &amp; Fufu</button>
-      <button class="menu-tab" data-category="rice">&#127831; Rice Dishes</button>
-      <button class="menu-tab" data-category="swallow">&#127820; Swallow &amp; Sides</button>
-      <button class="menu-tab" data-category="grills">&#127828; Grills &amp; Fish</button>
-      <button class="menu-tab" data-category="drinks">&#127864; Drinks</button>
+      <button class="menu-tab active" data-category="all">All</button>
+      <button class="menu-tab" data-category="week">Weekly Specials</button>
+      <button class="menu-tab" data-category="soups">Soups &amp; Fufu</button>
+      <button class="menu-tab" data-category="rice">Rice Dishes</button>
+      <button class="menu-tab" data-category="swallow">Swallow &amp; Sides</button>
+      <button class="menu-tab" data-category="grills">Grills &amp; Fish</button>
+      <button class="menu-tab" data-category="drinks">Drinks</button>
     </div>
 
     <div class="menu-section active" id="menuAll">
@@ -155,7 +157,7 @@
           <div class="item-body">
             <h3>Gari &amp; Beans (Red Red)</h3>
             <p class="desc">Fried ripe plantain &amp; beans in palm oil sauce, served with gari</p>
-            <div class="meta"><span class="price">GH&#x20B5; 35</span><span class="badge">&#127804; Vegan</span></div>
+            <div class="meta"><span class="price">GH&#x20B5; 35</span><span class="badge">Vegan</span></div>
           </div>
         </div>
         <div class="menu-item-block" data-cat="swallow">
@@ -196,7 +198,7 @@
           <div class="item-body">
             <h3>Fried Plantain (Dodo)</h3>
             <p class="desc">Golden fried ripe plantain slices — the perfect side dish</p>
-            <div class="meta"><span class="price">GH&#x20B5; 20</span><span class="badge">&#127804; Side</span></div>
+            <div class="meta"><span class="price">GH&#x20B5; 20</span><span class="badge">Side</span></div>
           </div>
         </div>
         <div class="menu-item-block" data-cat="drinks">
@@ -204,7 +206,7 @@
           <div class="item-body">
             <h3>Sobolo (Hibiscus Drink)</h3>
             <p class="desc">Refreshing chilled hibiscus tea with ginger, cloves &amp; pineapple — a Ghanaian favourite</p>
-            <div class="meta"><span class="price">GH&#x20B5; 15</span><span class="badge">&#127788; Chilled</span></div>
+            <div class="meta"><span class="price">GH&#x20B5; 15</span><span class="badge">Chilled</span></div>
           </div>
         </div>
 
@@ -238,6 +240,60 @@
         </div>
       </div>
     </div>
+
+    <div class="weekly-block" id="weeklyBlock" style="display:none;">
+      <div class="weekly-grid">
+      <div class="week-card" data-day="1">
+        <img src="images/waakye.jpg" alt="Waakye" loading="lazy">
+        <div class="week-day">Monday</div>
+        <div class="week-dish">Waakye</div>
+        <div class="week-opt">with egg, shito &amp; spaghetti</div>
+        <div class="week-price">GH&#x20B5; 40</div>
+      </div>
+      <div class="week-card" data-day="2">
+        <img src="images/okro-stew.jpg" alt="Banku with Okro Stew" loading="lazy">
+        <div class="week-day">Tuesday</div>
+        <div class="week-dish">Banku &amp; Okro Stew</div>
+        <div class="week-opt">assorted meat &amp; fried fish</div>
+        <div class="week-price">GH&#x20B5; 55</div>
+      </div>
+      <div class="week-card" data-day="3">
+        <img src="images/red-red.jpg" alt="Gari and Beans" loading="lazy">
+        <div class="week-day">Wednesday</div>
+        <div class="week-dish">Gari &amp; Beans (Red Red)</div>
+        <div class="week-opt">with fried plantain &amp; gari</div>
+        <div class="week-price">GH&#x20B5; 35</div>
+      </div>
+      <div class="week-card" data-day="4">
+        <img src="images/fufu-light-soup.jpg" alt="Fufu with Light Soup" loading="lazy">
+        <div class="week-day">Thursday</div>
+        <div class="week-dish">Fufu &amp; Light Soup</div>
+        <div class="week-opt">goat meat, garden eggs &amp; ayoyo</div>
+        <div class="week-price">GH&#x20B5; 55</div>
+      </div>
+      <div class="week-card" data-day="5">
+        <img src="images/banku-tilapia.jpg" alt="Banku and Tilapia" loading="lazy">
+        <div class="week-day">Friday</div>
+        <div class="week-dish">Banku &amp; Tilapia</div>
+        <div class="week-opt">grilled tilapia, shito &amp; fresh pepper</div>
+        <div class="week-price">GH&#x20B5; 65</div>
+      </div>
+      <div class="week-card" data-day="6">
+        <img src="images/grilled-chicken.jpg" alt="Jollof with Grilled Chicken" loading="lazy">
+        <div class="week-day">Saturday</div>
+        <div class="week-dish">Jollof &amp; Grilled Chicken</div>
+        <div class="week-opt">with salad &amp; shito</div>
+        <div class="week-price">GH&#x20B5; 60</div>
+      </div>
+      <div class="week-card" data-day="0">
+        <img src="images/groundnut-soup.jpg" alt="Fufu with Groundnut Soup" loading="lazy">
+        <div class="week-day">Sunday</div>
+        <div class="week-dish">Fufu &amp; Groundnut Soup</div>
+        <div class="week-opt">with chicken or beef</div>
+        <div class="week-price">GH&#x20B5; 55</div>
+      </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -255,6 +311,7 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="menu.html">Menu</a></li>
+          <li><a href="order.html">Order</a></li>
           <li><a href="game.html">Game</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -275,7 +332,7 @@
         </div>
         <div class="contact-item">
           <span class="icon">&#128222;</span>
-          <span>+233 50 123 4567</span>
+          <span>+233 205 155 149</span>
         </div>
         <div class="contact-item">
           <span class="icon">&#9993;</span>
