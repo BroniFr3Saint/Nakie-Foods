@@ -111,7 +111,7 @@ body {
 /* ─── NAV ─── */
 .nav {
   position: fixed;
-  top: 0;
+  top: 36px;
   left: 0;
   right: 0;
   z-index: 9999;
@@ -291,7 +291,7 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
-  padding: 120px 0 80px;
+  padding: 156px 0 80px;
 }
 
 .hero-text .badge {
@@ -888,7 +888,7 @@ body {
   background: linear-gradient(135deg, var(--black) 0%, #3A2E23 100%);
   position: relative;
   overflow: hidden;
-  padding-top: 80px;
+  padding-top: 116px;
 }
 .page-hero::before {
   content: '';
@@ -1415,6 +1415,73 @@ body {
   padding-top: 8px;
 }
 
+/* ─── PROMO BAR ─── */
+.promo-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-alt);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-align: center;
+  padding: 0 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+/* ─── FLOATING WHATSAPP ─── */
+.wa-float {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 9998;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+  transition: all var(--transition);
+}
+.wa-float:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 28px rgba(37,211,102,0.5);
+}
+.wa-float svg {
+  width: 30px;
+  height: 30px;
+  fill: #fff;
+}
+.wa-float .wa-tip {
+  position: absolute;
+  right: 68px;
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  background: var(--black);
+  color: var(--cream);
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--transition);
+}
+.wa-float:hover .wa-tip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 968px) {
   .delivery-cards { grid-template-columns: 1fr; }
@@ -1438,7 +1505,7 @@ body {
   .hamburger { display: flex; }
   .nav-links {
     position: fixed;
-    top: 0;
+    top: 36px;
     right: -100%;
     width: 280px;
     height: 100vh;
