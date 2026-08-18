@@ -106,8 +106,29 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(waBtn);
 
   document.querySelectorAll('form[data-netlify="true"]').forEach(form => {
+    const updateOrderWhatsAppLink = () => {
+      if (form.id !== 'orderForm') return;
+      const link = document.getElementById('orderWhatsAppFallback');
+      if (!link) return;
+      const data = new FormData(form);
+      const message = [
+        'Hello Nakie Foods! I would like to place an order.',
+        '',
+        'Name: ' + (data.get('name') || 'Not provided'),
+        'Phone: ' + (data.get('phone') || 'Not provided'),
+        'Delivery address: ' + (data.get('address') || 'Not provided'),
+        'Order: ' + (data.get('items') || 'Not provided'),
+        'Payment: ' + (data.get('payment') || 'Not provided'),
+        'Special instructions: ' + (data.get('notes') || 'None')
+      ].join('\n');
+      link.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+    };
+    updateOrderWhatsAppLink();
+    form.addEventListener('input', updateOrderWhatsAppLink);
+    form.addEventListener('change', updateOrderWhatsAppLink);
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      updateOrderWhatsAppLink();
       const btn = form.querySelector('button[type="submit"]');
       const statusEl = form.querySelector('.form-status');
       const original = btn.innerHTML;
@@ -146,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.innerHTML = '&#10060; Failed to send \u2014 please try again';
           btn.style.background = '#c0392b';
           if (statusEl) {
-            statusEl.textContent = 'We could not send your request (' + error.message + '). Please use WhatsApp while we reconnect the order desk.';
+            statusEl.textContent = 'The online inbox could not be reached (' + error.message + '). Use “Send directly on WhatsApp” below so the kitchen receives your order now.';
             statusEl.className = 'form-status error';
           }
           setTimeout(() => {
@@ -368,6 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cart = readCart();
     if (cart.length && !orderItemsField.value) {
       orderItemsField.value = cartOrderText(cart);
+      orderItemsField.dispatchEvent(new Event('input', { bubbles: true }));
       const note = document.querySelector('.order-form-note');
       if (note) note.textContent = 'Your cart has been added below. Add any special instructions, then send your order.';
     }
