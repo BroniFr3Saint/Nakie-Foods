@@ -132,6 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
             statusEl.textContent = 'Thank you! Your request has been sent — we\u2019ll get back to you soon.';
             statusEl.className = 'form-status success';
           }
+          if (form.id === 'orderForm') {
+            localStorage.removeItem('nakie-foods-cart');
+          }
           form.reset();
           setTimeout(() => {
             btn.innerHTML = original;
@@ -155,26 +158,149 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  document.querySelectorAll('.menu-item-block').forEach(item => {
-    const nameEl = item.querySelector('h3');
-    if (!nameEl) return;
-    const dish = nameEl.textContent.trim();
-    const priceEl = item.querySelector('.price');
-    const price = priceEl ? priceEl.textContent.trim() : '';
-    const message = 'I\u2019d like to order: ' + dish + (price ? ' (' + price + ')' : '') + ' from Nakie Foods.';
-    const link = document.createElement('a');
-    link.className = 'order-link';
-    link.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
-    link.target = '_blank';
-    link.rel = 'noopener';
-    link.innerHTML = 'Order';
-    const meta = item.querySelector('.meta');
-    if (meta) {
-      meta.appendChild(link);
-    } else {
-      item.appendChild(link);
+  // Menu cart: items are kept while the visitor moves from the menu to the order form.
+  const CART_KEY = 'nakie-foods-cart';
+  const menuItemsForCart = document.querySelectorAll('.menu-item-block');
+  const readCart = () => {
+    try {
+      const cart = JSON.parse(localStorage.getItem(CART_KEY));
+      return Array.isArray(cart) ? cart : [];
+    } catch {
+      return [];
     }
-  });
+  };
+  const writeCart = (cart) => localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  const formatMoney = (amount) => 'GH₵ ' + amount.toFixed(2);
+  const cartOrderText = (cart) => {
+    const lines = cart.map(item => item.quantity + '× ' + item.name + ' — ' + formatMoney(item.price * item.quantity));
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return lines.join('\n') + '\n\nEstimated total: ' + formatMoney(total);
+  };
+
+  if (menuItemsForCart.length) {
+    const cartButton = document.createElement('button');
+    cartButton.type = 'button';
+    cartButton.className = 'cart-toggle';
+    cartButton.setAttribute('aria-expanded', 'false');
+    cartButton.innerHTML = '🛒 Cart <span class="cart-count">0</span>';
+    document.body.appendChild(cartButton);
+
+    const cartPanel = document.createElement('aside');
+    cartPanel.className = 'cart-panel';
+    cartPanel.setAttribute('aria-label', 'Your order cart');
+    const cartHeader = document.createElement('div');
+    cartHeader.className = 'cart-header';
+    const cartTitle = document.createElement('h2');
+    cartTitle.textContent = 'Your cart';
+    const closeCart = document.createElement('button');
+    closeCart.type = 'button';
+    closeCart.className = 'cart-close';
+    closeCart.setAttribute('aria-label', 'Close cart');
+    closeCart.textContent = '×';
+    cartHeader.append(cartTitle, closeCart);
+    const cartItems = document.createElement('div');
+    cartItems.className = 'cart-items';
+    const cartFooter = document.createElement('div');
+    cartFooter.className = 'cart-footer';
+    cartPanel.append(cartHeader, cartItems, cartFooter);
+    document.body.appendChild(cartPanel);
+
+    const setCartOpen = (isOpen) => {
+      cartPanel.classList.toggle('open', isOpen);
+      cartButton.classList.toggle('open', isOpen);
+      cartButton.setAttribute('aria-expanded', String(isOpen));
+    };
+    const renderCart = () => {
+      const cart = readCart();
+      const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartButton.querySelector('.cart-count').textContent = itemCount;
+      cartItems.replaceChildren();
+      cartFooter.replaceChildren();
+      if (!cart.length) {
+        const empty = document.createElement('p');
+        empty.className = 'cart-empty';
+        empty.textContent = 'Your cart is empty. Add a dish from the menu to get started.';
+        cartItems.appendChild(empty);
+        return;
+      }
+      cart.forEach((item) => {
+        const row = document.createElement('div');
+        row.className = 'cart-item';
+        const details = document.createElement('div');
+        const name = document.createElement('strong');
+        name.textContent = item.name;
+        const price = document.createElement('span');
+        price.textContent = formatMoney(item.price * item.quantity);
+        details.append(name, price);
+        const controls = document.createElement('div');
+        controls.className = 'cart-quantity';
+        [['−', -1, 'Remove one '], ['+', 1, 'Add one ']].forEach(([label, change, description]) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = label;
+          button.setAttribute('aria-label', description + item.name);
+          button.addEventListener('click', () => {
+            const updated = readCart().map(entry => entry.name === item.name ? { ...entry, quantity: entry.quantity + change } : entry).filter(entry => entry.quantity > 0);
+            writeCart(updated);
+            renderCart();
+          });
+          controls.appendChild(button);
+          if (change === -1) {
+            const quantity = document.createElement('span');
+            quantity.textContent = item.quantity;
+            quantity.setAttribute('aria-label', item.quantity + ' ' + item.name);
+            controls.appendChild(quantity);
+          }
+        });
+        row.append(details, controls);
+        cartItems.appendChild(row);
+      });
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      const totalRow = document.createElement('p');
+      totalRow.className = 'cart-total';
+      totalRow.textContent = 'Estimated total: ' + formatMoney(total);
+      const checkout = document.createElement('a');
+      checkout.className = 'btn btn-primary cart-checkout';
+      checkout.href = 'order.html';
+      checkout.textContent = 'Continue to order';
+      cartFooter.append(totalRow, checkout);
+    };
+    menuItemsForCart.forEach((item) => {
+      const name = item.querySelector('h3')?.textContent.trim();
+      const priceText = item.querySelector('.price')?.textContent || '';
+      const price = Number(priceText.replace(/[^0-9.]/g, ''));
+      const meta = item.querySelector('.meta');
+      if (!name || !Number.isFinite(price) || !meta) return;
+      const addButton = document.createElement('button');
+      addButton.type = 'button';
+      addButton.className = 'add-to-cart';
+      addButton.textContent = 'Add to cart';
+      addButton.addEventListener('click', () => {
+        const cart = readCart();
+        const existing = cart.find(entry => entry.name === name);
+        if (existing) existing.quantity += 1;
+        else cart.push({ name, price, quantity: 1 });
+        writeCart(cart);
+        renderCart();
+        setCartOpen(true);
+      });
+      meta.appendChild(addButton);
+    });
+    cartButton.addEventListener('click', () => setCartOpen(!cartPanel.classList.contains('open')));
+    closeCart.addEventListener('click', () => setCartOpen(false));
+    renderCart();
+  }
+
+  // Pre-fill the order field after checkout from the menu cart.
+  const orderItemsField = document.getElementById('order-items');
+  if (orderItemsField) {
+    const cart = readCart();
+    if (cart.length && !orderItemsField.value) {
+      orderItemsField.value = cartOrderText(cart);
+      const note = document.querySelector('.order-form-note');
+      if (note) note.textContent = 'Your cart has been added below. Add any special instructions, then send your order.';
+    }
+  }
 
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
