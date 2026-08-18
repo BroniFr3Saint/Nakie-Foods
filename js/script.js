@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+  const WHATSAPP_NUMBER = '233205155149';
+
   const loader = document.getElementById('loader');
   if (loader) {
     setTimeout(() => loader.classList.add('hidden'), 800);
@@ -153,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const WHATSAPP_NUMBER = '233205155149';
   document.querySelectorAll('.menu-item-block').forEach(item => {
     const nameEl = item.querySelector('h3');
     if (!nameEl) return;
