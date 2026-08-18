@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const WHATSAPP_NUMBER = '233205155149';
+  const NETLIFY_FORM_ENDPOINT = '/netlify-forms.html';
 
   const loader = document.getElementById('loader');
   if (loader) {
@@ -140,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const data = new URLSearchParams(new FormData(form));
-      fetch(form.action, {
+      fetch(NETLIFY_FORM_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/x-www-form-urlencoded, text/html, */*' },
         body: data.toString()
