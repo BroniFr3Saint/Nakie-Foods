@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex">
+  <title>Form processing</title>
+</head>
+<body>
+  <!-- Static form blueprints: Netlify scans this file during each deploy. -->
+  <form name="order" method="POST" data-netlify="true">
+    <input type="hidden" name="form-name" value="order">
+    <input name="name" type="text">
+    <input name="phone" type="tel">
+    <input name="address" type="text">
+    <textarea name="items"></textarea>
+    <select name="payment"><option value="cash">Cash on Delivery</option></select>
+    <input name="notes" type="text">
+  </form>
+  <form name="reservation" method="POST" data-netlify="true">
+    <input type="hidden" name="form-name" value="reservation">
+    <input name="name" type="text">
+    <input name="phone" type="tel">
+    <input name="date" type="date">
+    <input name="time" type="time">
+    <select name="party_size"><option value="1-2">1 – 2 people</option></select>
+    <input name="requests" type="text">
+  </form>
+</body>
+</html>

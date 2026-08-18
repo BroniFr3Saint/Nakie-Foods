@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body: data.toString()
       })
         .then(response => {
-          if (!response.ok) throw new Error('Network response was not ok');
+          if (!response.ok) throw new Error('HTTP ' + response.status);
           btn.innerHTML = '&#10004; Sent!';
           btn.style.background = 'var(--green)';
           if (statusEl) {
@@ -142,11 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = false;
           }, 4000);
         })
-        .catch(() => {
+        .catch((error) => {
           btn.innerHTML = '&#10060; Failed to send \u2014 please try again';
           btn.style.background = '#c0392b';
           if (statusEl) {
-            statusEl.textContent = 'Something went wrong. Please try again in a moment.';
+            statusEl.textContent = 'We could not send your request (' + error.message + '). Please use WhatsApp while we reconnect the order desk.';
             statusEl.className = 'form-status error';
           }
           setTimeout(() => {
@@ -209,6 +209,42 @@ document.addEventListener('DOMContentLoaded', () => {
     cartFooter.className = 'cart-footer';
     cartPanel.append(cartHeader, cartItems, cartFooter);
     document.body.appendChild(cartPanel);
+
+    const orderChoice = document.createElement('div');
+    orderChoice.className = 'order-choice';
+    orderChoice.setAttribute('role', 'dialog');
+    orderChoice.setAttribute('aria-modal', 'true');
+    orderChoice.setAttribute('aria-labelledby', 'orderChoiceTitle');
+    const choiceCard = document.createElement('div');
+    choiceCard.className = 'order-choice-card';
+    const choiceClose = document.createElement('button');
+    choiceClose.type = 'button';
+    choiceClose.className = 'order-choice-close';
+    choiceClose.setAttribute('aria-label', 'Close order options');
+    choiceClose.textContent = '×';
+    const choiceKicker = document.createElement('p');
+    choiceKicker.className = 'cart-kicker';
+    choiceKicker.textContent = 'Fresh from the kitchen';
+    const choiceTitle = document.createElement('h2');
+    choiceTitle.id = 'orderChoiceTitle';
+    choiceTitle.textContent = 'How would you like to order?';
+    const choiceText = document.createElement('p');
+    choiceText.className = 'order-choice-text';
+    const choiceActions = document.createElement('div');
+    choiceActions.className = 'order-choice-actions';
+    const basketChoice = document.createElement('button');
+    basketChoice.type = 'button';
+    basketChoice.className = 'btn btn-primary';
+    basketChoice.textContent = 'Add to kitchen basket';
+    const whatsappChoice = document.createElement('a');
+    whatsappChoice.className = 'btn btn-whatsapp';
+    whatsappChoice.target = '_blank';
+    whatsappChoice.rel = 'noopener';
+    whatsappChoice.textContent = 'Order on WhatsApp';
+    choiceActions.append(basketChoice, whatsappChoice);
+    choiceCard.append(choiceClose, choiceKicker, choiceTitle, choiceText, choiceActions);
+    orderChoice.appendChild(choiceCard);
+    document.body.appendChild(orderChoice);
 
     const setCartOpen = (isOpen) => {
       cartPanel.classList.toggle('open', isOpen);
@@ -278,6 +314,25 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       cartFooter.append(totalRow, checkout, clearCart);
     };
+    const addToCart = (name, price, openCart = true) => {
+      const cart = readCart();
+      const existing = cart.find(entry => entry.name === name);
+      if (existing) existing.quantity += 1;
+      else cart.push({ name, price, quantity: 1 });
+      writeCart(cart);
+      renderCart();
+      if (openCart) setCartOpen(true);
+    };
+    const closeOrderChoice = () => orderChoice.classList.remove('open');
+    const openOrderChoice = (name, price) => {
+      choiceText.textContent = name + ' is ready when you are. Choose how you would like to send your order.';
+      whatsappChoice.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('I\u2019d like to order: ' + name + ' (' + formatMoney(price) + ') from Nakie Foods.');
+      basketChoice.onclick = () => {
+        addToCart(name, price);
+        closeOrderChoice();
+      };
+      orderChoice.classList.add('open');
+    };
     menuItemsForCart.forEach((item) => {
       const name = item.querySelector('h3')?.textContent.trim();
       const priceText = item.querySelector('.price')?.textContent || '';
@@ -289,18 +344,21 @@ document.addEventListener('DOMContentLoaded', () => {
       addButton.className = 'add-to-cart';
       addButton.textContent = 'Add to basket';
       addButton.addEventListener('click', () => {
-        const cart = readCart();
-        const existing = cart.find(entry => entry.name === name);
-        if (existing) existing.quantity += 1;
-        else cart.push({ name, price, quantity: 1 });
-        writeCart(cart);
-        renderCart();
-        setCartOpen(true);
+        addToCart(name, price);
       });
-      meta.appendChild(addButton);
+      const orderButton = document.createElement('button');
+      orderButton.type = 'button';
+      orderButton.className = 'choose-order-method';
+      orderButton.textContent = 'Order now';
+      orderButton.addEventListener('click', () => openOrderChoice(name, price));
+      meta.append(addButton, orderButton);
     });
     cartButton.addEventListener('click', () => setCartOpen(!cartPanel.classList.contains('open')));
     closeCart.addEventListener('click', () => setCartOpen(false));
+    choiceClose.addEventListener('click', closeOrderChoice);
+    orderChoice.addEventListener('click', (event) => {
+      if (event.target === orderChoice) closeOrderChoice();
+    });
     renderCart();
   }
 
